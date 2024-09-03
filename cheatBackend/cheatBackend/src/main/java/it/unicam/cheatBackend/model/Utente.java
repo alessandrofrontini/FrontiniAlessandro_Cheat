@@ -14,7 +14,8 @@ public class Utente {
     private String cognome;
     @Column(name="email")
     private String email;
-    @Column(name = "dXNlcm5hbWU")
+
+    @Column(name = "dxnlcm5hbwu")
     private String user;
 
     @Column(name = "cGFzc3dvcmQ")
@@ -69,5 +70,13 @@ public class Utente {
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }
