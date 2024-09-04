@@ -21,12 +21,16 @@ public class Utente {
     @Column(name = "cGFzc3dvcmQ")
     private String pwd;
 
-    public Utente(String nome, String cognome, String email, String user, String pwd) {
+    @Column(name = "salt")
+    private String salt;
+
+    public Utente(String nome, String cognome, String email, String user, String pwd, String salt) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.user = user;
         this.pwd = pwd;
+        this.salt = salt;
     }
 
     public Utente(){
@@ -78,5 +82,12 @@ public class Utente {
 
     public void setUser(String user) {
         this.user = user;
+    }
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }
