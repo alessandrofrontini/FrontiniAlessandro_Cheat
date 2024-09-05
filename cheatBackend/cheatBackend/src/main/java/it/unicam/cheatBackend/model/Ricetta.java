@@ -12,6 +12,7 @@ public class Ricetta {
     private String nome;
     @Column(name = "prezzo")
     private int prezzo;
+
     @Column(name = "tempo")
     private int tempo;
     @Column(name = "ingredienti")
@@ -68,6 +69,13 @@ public class Ricetta {
 
     public void setIdUtente(long idUtente) {
         this.idUtente = idUtente;
+    }
+    public int getTempo() {
+        return tempo;
+    }
+
+    public void setTempo(int tempo) {
+        this.tempo = tempo;
     }
 
     public Ricetta(String nome, int prezzo, int prezzo1, String ingredienti, String preparazione, long idUtente) {

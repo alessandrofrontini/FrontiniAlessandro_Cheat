@@ -29,9 +29,12 @@ public class JWTService {
         return extractClaim(token, Claims::getSubject);
     }
     
-    public boolean validateToken(String token, String idutente) {
-        final String extractedUsername = extractUserID(token);
-        return (extractedUsername!=null) && ((extractedUsername.equals(idutente) && !isTokenExpired(token)));
+    public Long validateToken(String token) {
+        final String idUtenteInChiaro = extractUserID(token);
+        System.out.println(idUtenteInChiaro);
+        if((idUtenteInChiaro!=null) && !isTokenExpired(token))
+            return Long.parseLong(idUtenteInChiaro);
+        return 0L;
     }
 
     private boolean isTokenExpired(String token) {

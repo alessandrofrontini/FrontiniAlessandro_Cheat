@@ -31,7 +31,7 @@ public class LoginController {
             ResponseCookie cookie = ResponseCookie.from("token", token)
                     .httpOnly(true)
                     .path("/")
-                    .maxAge(15) // Durata in secondi
+                    .maxAge(600) // Durata in secondi
                     .sameSite("Strict")
                     .build();
             return ResponseEntity.ok()
@@ -52,6 +52,6 @@ public class LoginController {
 
 
     private boolean validaJWT(String token){
-        return !token.isEmpty() && jwtService.validateToken(token, jwtService.extractUserID(token));
+        return !token.isEmpty() && jwtService.validateToken(token)!=0L;
     }
 }
