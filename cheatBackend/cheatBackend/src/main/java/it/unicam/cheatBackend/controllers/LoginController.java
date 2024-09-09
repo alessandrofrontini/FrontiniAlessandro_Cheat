@@ -4,6 +4,7 @@ import it.unicam.cheatBackend.model.Utente;
 import it.unicam.cheatBackend.repository.UtentiRepo;
 import it.unicam.cheatBackend.services.JWTService;
 import it.unicam.cheatBackend.services.LoginService;
+import it.unicam.cheatBackend.services.SanitizeService;
 import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -23,9 +24,11 @@ public class LoginController {
     private LoginService loginService;
     @Autowired
     private JWTService jwtService;
+    @Autowired
+    private SanitizeService sanitizeService;
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) throws NoSuchAlgorithmException {
-        Optional<Utente> utente = loginService.login(username, password);
+        Optional<Utente> utente = loginService.login(sanitizeService.sanificaInput(username), sanitizeService.sanificaInput(password));
         if (utente.isPresent()) {
             String token = jwtService.generateToken(String.valueOf(utente.get().getId()));
             ResponseCookie cookie = ResponseCookie.from("token", token)
