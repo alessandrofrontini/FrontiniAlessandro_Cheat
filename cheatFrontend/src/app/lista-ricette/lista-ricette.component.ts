@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Ricetta } from '../ricetta';
-import { RicetteServiceService } from '../ricette-service.service';
 import { CommonModule } from '@angular/common';
+import { RicetteServiceService } from '../../Services/ricette-service.service';
+import { Ricetta } from '../../Classi/ricetta';
 
 @Component({
   selector: 'app-lista-ricette',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './lista-ricette.component.html',
-  styleUrl: './lista-ricette.component.css'
+  styleUrl: './lista-ricette.component.scss'
 })
 export class ListaRicetteComponent implements OnInit{
 
