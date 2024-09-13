@@ -1,0 +1,7 @@
+<label for="prezzoSlider" class="form-label">Prezzo: {{prezzo}}€</label>
+<input type="range" class="form-range" min="1" max="10" step="1" value="5" id="prezzoSlider" [(ngModel)]="prezzo">
+
+<label for="tempoSlider" class="form-label">Tempo in minuti: {{tempo}}m</label>
+<input type="range" class="form-range" min="1" max="20" step="1" value="10" id="tempoSlider" [(ngModel)]="tempo">
+
+<button [routerLink]="['/ricette', prezzo, tempo]" class="btn btn-primary">Vai alle ricette</button>
