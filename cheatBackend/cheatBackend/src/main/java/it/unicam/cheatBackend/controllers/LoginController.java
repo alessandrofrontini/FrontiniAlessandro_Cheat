@@ -34,14 +34,14 @@ public class LoginController {
             ResponseCookie cookie = ResponseCookie.from("token", token)
                     .httpOnly(true)
                     .path("/")
-                    .maxAge(600) // Durata in secondi
+                    .maxAge(15) // Durata in secondi
                     .sameSite("Strict")
                     .build();
             return ResponseEntity.ok()
                     .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                    .body("Login corretto");
+                    .body(null);
         } else {
-            return ResponseEntity.status(401).body("Invalid username or password");
+            return new ResponseEntity<>(HttpStatusCode.valueOf(401));
         }
     }
     @PostMapping("/validate")
