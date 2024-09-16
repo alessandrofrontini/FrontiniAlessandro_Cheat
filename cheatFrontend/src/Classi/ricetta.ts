@@ -1,20 +1,18 @@
 export class Ricetta {
-    id:number;
+    id?:number;
     nome:string;
     prezzo:number;
     tempo:number;
     ingredienti:string;
     preparazione:string;
-    idUtente:number;
+    idUtente?:number;
 
-    constructor(id:number, nome:string, prezzo:number, tempo:number, ingredienti:string, preparazione:string, idu:number){
-        this.id = id;
+    constructor( nome:string, prezzo:number, tempo:number, ingredienti:string, preparazione:string){
         this.nome = nome;
         this.prezzo = prezzo;
         this.tempo = tempo;
         this.ingredienti = ingredienti;
         this.preparazione = preparazione;
-        this.idUtente = idu;
     }
 
 }

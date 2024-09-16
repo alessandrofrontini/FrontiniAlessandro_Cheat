@@ -34,7 +34,7 @@ public class LoginController {
             ResponseCookie cookie = ResponseCookie.from("token", token)
                     .httpOnly(true)
                     .path("/")
-                    .maxAge(15) // Durata in secondi
+                    .maxAge(60) // Durata in secondi
                     .sameSite("Strict")
                     .build();
             return ResponseEntity.ok()

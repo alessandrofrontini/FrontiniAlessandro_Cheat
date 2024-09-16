@@ -34,8 +34,8 @@ public class RicetteController {
     @PostMapping("/create")
     public ResponseEntity<String> creaRicetta(@Nullable @CookieValue("token") String token, @RequestBody Ricetta r){
         if(ricetteService.inserisciRicetta(token, sanificaRicetta(r)))
-            return ResponseEntity.status(201).body("Ricetta creata");
-        else return ResponseEntity.status(401).body("Si è verificato un problema");
+            return ResponseEntity.status(201).body(null);
+        else return ResponseEntity.status(401).body(null);
     }
 
     @DeleteMapping("/delete")
