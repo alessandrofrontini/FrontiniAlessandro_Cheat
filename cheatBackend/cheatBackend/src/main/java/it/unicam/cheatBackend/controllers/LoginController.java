@@ -53,6 +53,15 @@ public class LoginController {
             return new ResponseEntity<>(HttpStatusCode.valueOf(401));
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<String> registraNuovoUtente(@RequestBody Utente utente) throws NoSuchAlgorithmException {
+        try {
+            loginService.registraUtente(utente);
+            return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatusCode.valueOf(401));
+        }
+    }
 
     private boolean validaJWT(String token){
         return !token.isEmpty() && jwtService.validateToken(token)!=0L;

@@ -2,6 +2,7 @@ import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment.development';
 import { Observable } from 'rxjs';
+import { Utente } from '../Classi/utente';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,12 @@ export class LoginServiceService {
     return this.httpClient.post(environment.baseUrl + "/api/auth/validate", {}, { 
       params: {},
       observe: 'response' 
+    });
+  }
+
+  Register(utente:Utente):Observable<HttpResponse<any>>{
+    return this.httpClient.post(environment.baseUrl + "/api/auth/register", utente, {
+      observe: "response"
     });
   }
 }

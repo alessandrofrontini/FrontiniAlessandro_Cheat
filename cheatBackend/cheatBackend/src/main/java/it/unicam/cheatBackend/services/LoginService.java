@@ -24,7 +24,11 @@ public class LoginService {
         }
         return Optional.empty();
     }
-
+    public void registraUtente(Utente u) throws NoSuchAlgorithmException {
+        u.setSalt(generaSalt());
+        u.setPwd(hashPassword(u.getPwd(), u.getSalt()));
+        utenteRepository.save(u);
+    }
     private String generaSalt(){
         byte[] salt = new byte[16];
         SecureRandom random = new SecureRandom();
