@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,10 +42,19 @@ public class RicetteController {
     @DeleteMapping("/delete")
     public ResponseEntity<String> eliminaRicetta(@Nullable @CookieValue("token") String token, @RequestParam String idr){
         if(ricetteService.eliminaRicetta(token, idr))
-            return ResponseEntity.status(200).body("Ricetta eliminata");
-        else return ResponseEntity.status(401).body("Si è verificato un problema");
+            return ResponseEntity.status(200).body(null);
+        else return ResponseEntity.status(401).body(null);
     }
-
+    @PostMapping("/my")
+    public ResponseEntity<Optional<List<Ricetta>>> getMieRicette(@Nullable @CookieValue("token") String token){
+        if(token!=null) {
+            Optional<List<Ricetta>> ricette = ricetteService.getRicetteByIdUtente(token);
+            if (ricette.isPresent() && !ricette.get().isEmpty()) {
+                return ResponseEntity.status(200).body(ricette);
+            }
+        }
+        return ResponseEntity.status(404).body(null);
+    }
     private Ricetta sanificaRicetta(Ricetta r){
         r.setNome(sanitizeService.sanificaInput(r.getNome()));
         r.setPrezzo(Integer.parseInt(sanitizeService.sanificaInput(Integer.toString(r.getPrezzo()))));

@@ -13,4 +13,6 @@ import java.util.Optional;
 public interface RicetteRepo extends JpaRepository<Ricetta, Long> {
     @Query("SELECT r FROM Ricetta r WHERE r.prezzo <= :prezzo AND r.tempo <= :tempo ORDER BY r.prezzo, r.tempo ASC")
     Optional<List<Ricetta>> getRicette(@Param("prezzo") int prezzo, @Param("tempo") int tempo);
+
+    Optional<List<Ricetta>> getRicettasByIdUtente(long idUtente);
 }

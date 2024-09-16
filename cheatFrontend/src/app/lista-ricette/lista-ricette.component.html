@@ -1,21 +1,24 @@
 <h1>{{ricetteCount}} Ricette trovate</h1>
-<table class = "table table-striped">
+<table class="table table-striped">
     <thead>
         <tr>
-            <th> Nome </th>
-            <th> Prezzo(€)</th>
-            <th> Tempo(m)</th>
-            <th> Ingredienti</th>
-            <th> Preparazione</th>
+            <th>Nome</th>
+            <th>Prezzo(€)</th>
+            <th>Tempo(m)</th>
+            <th>Ingredienti</th>
+            <th>Preparazione</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor = "let ricetta of ricette">
+        <tr *ngFor="let ricetta of ricette">
             <td>{{ricetta.nome}}</td>
             <td>{{ricetta.prezzo}}</td>
             <td>{{ricetta.tempo}}</td>
             <td>{{ricetta.ingredienti}}</td>
             <td>{{ricetta.preparazione}}</td>
+            <td *ngIf="deletable === true">
+                <button class="btn btn-danger" (click)="cancella(ricetta.id)">Elimina Ricetta</button>
+            </td>
         </tr>
     </tbody>
 </table>

@@ -37,4 +37,11 @@ public class RicetteService {
        }
        return false;
    }
+
+   public Optional<List<Ricetta>> getRicetteByIdUtente(String token){
+        if((!token.isEmpty())&&(jwtService.validateToken(token)!=0L)){
+            return ricetteRepo.getRicettasByIdUtente(Long.parseLong(jwtService.extractUserID(token)));
+        }
+        return Optional.empty();
+   }
 }

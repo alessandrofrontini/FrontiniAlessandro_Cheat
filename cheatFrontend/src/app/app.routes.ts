@@ -8,5 +8,6 @@ export const routes: Routes = [
     {path:'', component:LoginFormComponent},
     {path:'select', component:SelettoreComponent},
     {path:'insert', component:InputRicettaComponent},
-    {path: 'ricette/:prezzo/:tempo', component: ListaRicetteComponent}
+    {path: 'ricette/:prezzo/:tempo', component: ListaRicetteComponent},
+    {path: 'ricette', component: ListaRicetteComponent}
 ];
