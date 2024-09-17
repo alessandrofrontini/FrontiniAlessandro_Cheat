@@ -2,7 +2,7 @@ import { Component, numberAttribute, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RicetteServiceService } from '../../Services/ricette-service.service';
 import { Ricetta } from '../../Classi/ricetta';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ListaRicetteComponent implements OnInit{
 
-constructor(private ricetteService:RicetteServiceService, private route:ActivatedRoute){}
+constructor(private ricetteService:RicetteServiceService, private route:ActivatedRoute, private router:Router){}
 
 ricetteCount!:number;
 ricette:Ricetta[]=[];
@@ -32,30 +32,37 @@ ngOnInit(): void {
       });
     }
     else{
-      this.ricetteService.getMieRicette().subscribe(data => {
-        this.ricette = data;
-        this.ricetteCount = this.ricette.length;
-        this.deletable = true;
-      });
+      this.ricetteService.getMieRicette().subscribe({
+        next: (data: Ricetta[]) => {
+          this.ricette = data;
+          this.ricetteCount = this.ricette.length;
+          this.deletable = true;
+        },
+        error: (error) => {
+          window.alert("Errore. Effettua nuovamente il login.");
+          this.router.navigate(['login']);
+        }
+      });      
     }
     });
 }
 
 cancella(id?:number){
   if(id)
-    this.ricetteService.eliminaRicetta(id).subscribe(
-  (response) =>{
-    if (response.status === 200) {
-      console.log('cancellata');
-    }
-  },
-  (error) => {
-    if (error.status === 401) {
-      console.error('non cancellata');
-      
-    } else {
-      console.error('An error occurred:', error);
-    }
-  });
+    this.ricetteService.eliminaRicetta(id).subscribe({
+      next: (response) =>{
+        if (response.status === 200) {
+          window.alert('Ricetta eliminata. Premi OK per continuare.');
+          this.router.navigate(['ricette']);
+        }
+      },
+      error: (error) => {
+        if (error.status === 401) {
+          window.alert('Errore nella cancellazione. Effettua nuovamente il login.');
+          this.router.navigate(['login']);
+        }
+      }
+  }
+  );
 }
 }

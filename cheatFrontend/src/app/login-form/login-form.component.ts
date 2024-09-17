@@ -16,7 +16,7 @@ export class LoginFormComponent {
   pwd?: string;
 
   
-  constructor(private loginService: LoginServiceService) {
+  constructor(private loginService: LoginServiceService, private router:Router) {
   }
 
   
@@ -24,42 +24,26 @@ export class LoginFormComponent {
     if (this.user && this.pwd) {
     
           this.loginService.Login(this.user, this.pwd).subscribe(
-                  (response) => {
-                    if (response.status === 200) {
-                      console.log('Login successful');
-                    }
-                  },
-                  (error) => {
-                    if (error.status === 401) {
-                      console.error('Login failed: Unauthorized');
-                      
-                    } else {
-                      console.error('An error occurred:', error);
-                    }
+            {
+                next: (response) => {
+                  if (response.status === 200) {
+                    this.router.navigate(['select']);
                   }
-                );
+                },
+                error: (error) => {
+                  if (error.status === 401) {
+                    window.alert('Login errato. Premi OK per riprovare.');
+                    
+                  } else {
+                  }
+                }
+            }
+          );
+                  
     }
     else {
-      console.error('User or password missing');
+      window.alert('Credenziali mancanti. Premi OK per continuare.');
     }
-  }
-  Valida(){
-    this.loginService.Validate().subscribe(
-      (response) => {
-        if (response.status === 200) {
-          console.log('validation successful');
-          
-        }
-      },
-      (error) => {
-        if (error.status === 401) {
-          console.error('validation denied');
-          
-        } else {
-          console.error('An error occurred:', error);
-        }
-      }
-    );
   }
   }
   

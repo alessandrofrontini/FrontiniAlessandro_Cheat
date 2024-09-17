@@ -1,7 +1,39 @@
-<label for="prezzoSlider" class="form-label">Prezzo: {{prezzo}}€</label>
-<input type="range" class="form-range" min="1" max="10" step="1" value="5" id="prezzoSlider" [(ngModel)]="prezzo">
+<div class="container">
+    <div class="mb-3">
+      <label for="prezzoSlider" class="form-label">Prezzo: {{prezzo}}€</label>
+      <input
+        type="range"
+        class="form-range"
+        min="1"
+        max="10"
+        value = "5"
+        step="1"
+        id="prezzoSlider"
+        [(ngModel)]="prezzo"
+      />
+    </div>
 
-<label for="tempoSlider" class="form-label">Tempo in minuti: {{tempo}}m</label>
-<input type="range" class="form-range" min="1" max="20" step="1" value="10" id="tempoSlider" [(ngModel)]="tempo">
+    <div class="mb-3">
+      <label for="tempoSlider" class="form-label">Tempo in minuti: {{tempo}}m</label>
+      <input
+        type="range"
+        class="form-range"
+        min="1"
+        max="20"
+        value = "10"
+        step="1"
+        id="tempoSlider"
+        [(ngModel)]="tempo"
+      />
+    </div>
 
-<button [routerLink]="['/ricette', prezzo, tempo]" class="btn btn-primary">Vai alle ricette</button>
+    <div class="d-grid">
+      <button
+        [routerLink]="['/ricette', prezzo, tempo]"
+        class="btn btn-primary"
+      >
+        Vai alle ricette
+      </button>
+    </div>
+  </div>
+  

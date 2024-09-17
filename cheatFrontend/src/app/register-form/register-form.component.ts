@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LoginServiceService } from '../../Services/login-service.service';
 import { Utente } from '../../Classi/utente';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-form',
@@ -16,25 +17,24 @@ export class RegisterFormComponent {
   email:string = "";
   user:string = "";
   pwd:string = "";
-  constructor(private loginService:LoginServiceService){}
+  constructor(private loginService:LoginServiceService, private router:Router){}
 
-  registraUtente(){
-
-    this.loginService.Register(new Utente(this.nome, this.cognome, this.email, this.user, this.pwd)).subscribe(
-      (response) =>{
+  registraUtente() {
+    this.loginService.Register(new Utente(this.nome, this.cognome, this.email, this.user, this.pwd)).subscribe({
+      next: (response) => {
         if (response.status === 200) {
-          console.log('Registrazione avvenuta');
+          window.alert('Registrazione avvenuta. Premi OK per continuare.');
+          this.router.navigate(['login']);
         }
       },
-      (error) => {
+      error: (error) => {
         if (error.status === 401) {
-          console.error('Registrazione non avvenuta');
-          
+          window.alert('Registrazione non avvenuta. Premi OK per riprovare.');
         } else {
           console.error('An error occurred:', error);
         }
-      });
-
-    
+      }
+    });
   }
+  
 }

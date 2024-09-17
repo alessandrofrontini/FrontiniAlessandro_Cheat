@@ -1,58 +1,73 @@
 <form (ngSubmit)="registraUtente()">
-    <div class="form-group">
-        <label for="Nome">Nome</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Inserisci il nome"
-          [(ngModel)]="nome"
-          name="Nome"
-          required
-        />
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-6">
+
+        <div class="form-group mb-3">
+          <label for="Nome">Nome</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Inserisci il nome"
+            [(ngModel)]="nome"
+            name="Nome"
+            required
+          />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="Cognome">Cognome</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Inserisci il Cognome"
+            [(ngModel)]="cognome"
+            name="Cognome"
+            required
+          />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="Email">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Inserisci la tua email"
+            [(ngModel)]="email"
+            name="Email"
+            required
+          />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="Username">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Inserisci il tuo Username"
+            [(ngModel)]="user"
+            name="Username"
+            required
+          />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="exampleInputPassword1">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            [(ngModel)]="pwd"
+            name="password"
+            required
+          />
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Registrati</button>
+        </div>
+
       </div>
-      <div class="form-group">
-        <label for="Cognome">Cognome</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Inserisci il Cognome"
-          [(ngModel)]="cognome"
-          name="Cognome"
-          required
-        />
-      </div>
-      <div class="form-group">
-        <label for="Email">Email</label>
-        <input
-          type="email"
-          class="form-control"
-          placeholder="Inserisci la tua email"
-          [(ngModel)]="email"
-          name="Email"
-          required
-        />
-      </div>
-      <div class="form-group">
-        <label for="Username">Username</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Inserisci il tuo Username"
-          [(ngModel)]="user"
-          name="Username"
-          required
-        />
-      </div>
-      <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input
-          type="password"
-          class="form-control"
-          placeholder="Password"
-          [(ngModel)]="pwd"
-          name="password"
-          required
-        />
-      </div>
-      <button type="submit" class="btn btn-primary">Registrati</button>
-</form>   
+    </div>
+  </div>
+</form>
