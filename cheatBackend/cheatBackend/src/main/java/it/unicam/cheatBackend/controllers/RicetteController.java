@@ -25,6 +25,7 @@ public class RicetteController {
     @CrossOrigin
     @PostMapping("")
     public ResponseEntity<Optional<List<Ricetta>>> getAll(@RequestParam String prezzo, @RequestParam String tempo){
+        //si ottengono le ricette con prezzo e tempo di preparazione adeguati, dopo aver sanificato gli input
         Optional<List<Ricetta>> ricette = ricetteService.getRicetteByTempoAndPrezzo(Integer.parseInt(sanitizeService.sanificaInput(prezzo)), Integer.parseInt(sanitizeService.sanificaInput(tempo)));
         if(ricette.isPresent() && !ricette.get().isEmpty()) {
             return ResponseEntity.status(200).body(ricette);
@@ -34,6 +35,7 @@ public class RicetteController {
 
     @PostMapping("/create")
     public ResponseEntity<String> creaRicetta(@Nullable @CookieValue("token") String token, @RequestBody Ricetta r){
+        //la ricetta viene inserita soltanto dopo la validazione del JWT
         if(ricetteService.inserisciRicetta(token, sanificaRicetta(r)))
             return ResponseEntity.status(201).body(null);
         else return ResponseEntity.status(401).body(null);
@@ -41,21 +43,27 @@ public class RicetteController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<String> eliminaRicetta(@Nullable @CookieValue("token") String token, @RequestParam String idr){
+        //la ricetta viene eliminata soltanto dopo la validazione del JWT
         if(ricetteService.eliminaRicetta(token, idr))
             return ResponseEntity.status(200).body(null);
         else return ResponseEntity.status(401).body(null);
     }
     @PostMapping("/my")
     public ResponseEntity<Optional<List<Ricetta>>> getMieRicette(@Nullable @CookieValue("token") String token){
+        //si ottengono le ricette inserite da un dato utente soltanto dopo la validazione del JWT
         if(token!=null) {
             Optional<List<Ricetta>> ricette = ricetteService.getRicetteByIdUtente(token);
             if (ricette.isPresent() && !ricette.get().isEmpty()) {
                 return ResponseEntity.status(200).body(ricette);
             }
+            //se l'utente non ha inserito ricette ritorna uno status 404
+            else return ResponseEntity.status(404).body(null);
         }
-        return ResponseEntity.status(404).body(null);
+        //altrimenti, se l'utente non è autorizzato, ritorna uno status 401
+        return ResponseEntity.status(401).body(null);
     }
     private Ricetta sanificaRicetta(Ricetta r){
+        //per ogni ricetta, viene effettuato il sanitize di ogni campo
         r.setNome(sanitizeService.sanificaInput(r.getNome()));
         r.setPrezzo(Integer.parseInt(sanitizeService.sanificaInput(Integer.toString(r.getPrezzo()))));
         r.setTempo(Integer.parseInt(sanitizeService.sanificaInput(Integer.toString(r.getTempo()))));

@@ -28,29 +28,26 @@ public class LoginController {
     private SanitizeService sanitizeService;
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) throws NoSuchAlgorithmException {
+        //estrazione dell'utente dal DB dopo aver sanificato i valori ottenuti dalla richiesta
         Optional<Utente> utente = loginService.login(sanitizeService.sanificaInput(username), sanitizeService.sanificaInput(password));
+        //se l'utente è presente (altrimenti il risultato sarebbe Optional.empty)
         if (utente.isPresent()) {
+            //generazione del JWT
             String token = jwtService.generateToken(String.valueOf(utente.get().getId()));
+            //creazione del cookie contenente il JWT
             ResponseCookie cookie = ResponseCookie.from("token", token)
-                    .httpOnly(true)
+                    .httpOnly(true) //accessibile solo da HTTP e HTTPS (no JS)
                     .path("/")
                     .maxAge(60) // Durata in secondi
-                    .sameSite("Strict")
+                    .sameSite("Strict") //inviabile solo dal sito che l'ha creato (no attacchi cross-site)
                     .build();
+            //risposta contenente il cookie
             return ResponseEntity.ok()
                     .header(HttpHeaders.SET_COOKIE, cookie.toString())
                     .body(null);
         } else {
             return new ResponseEntity<>(HttpStatusCode.valueOf(401));
         }
-    }
-    @PostMapping("/validate")
-    public ResponseEntity<String> ValidaToken(@Nullable @CookieValue("token") String token){
-        if(!(token == null) && validaJWT(token)){
-            return new ResponseEntity<>(HttpStatusCode.valueOf(200));
-        }
-        else
-            return new ResponseEntity<>(HttpStatusCode.valueOf(401));
     }
 
     @PostMapping("/register")
@@ -61,9 +58,5 @@ public class LoginController {
         } catch (Exception e){
             return new ResponseEntity<>(HttpStatusCode.valueOf(401));
         }
-    }
-
-    private boolean validaJWT(String token){
-        return !token.isEmpty() && jwtService.validateToken(token)!=0L;
     }
 }

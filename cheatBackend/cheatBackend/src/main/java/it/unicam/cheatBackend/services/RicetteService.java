@@ -20,8 +20,10 @@ public class RicetteService {
     }
 
     public boolean inserisciRicetta(String token, Ricetta r){
+        //si ottiene l'ID dell'utente attraverso la validazione del JWT
         Long idUtente = jwtService.validateToken(token);
         if(idUtente != 0L){
+            //se il JWT è valido viene impostato l'ID utente e la ricetta viene salvata
             r.setIdUtente(idUtente);
             ricetteRepo.save(r);
             return true;
@@ -30,8 +32,10 @@ public class RicetteService {
     }
 
    public boolean eliminaRicetta(String token, String r){
+       //si ottiene l'ID dell'utente attraverso la validazione del JWT
        Long idUtente = jwtService.validateToken(token);
        if(idUtente != 0L){
+           //se il JWT è valido viene impostato l'ID utente e la ricetta viene eliminata
            ricetteRepo.deleteById(Long.parseLong(r));
            return true;
        }
@@ -39,7 +43,9 @@ public class RicetteService {
    }
 
    public Optional<List<Ricetta>> getRicetteByIdUtente(String token){
+       //si ottiene l'ID dell'utente attraverso la validazione del JWT
         if((!token.isEmpty())&&(jwtService.validateToken(token)!=0L)){
+            //si estraggono tutte le ricette create da quell'utente
             return ricetteRepo.getRicettasByIdUtente(Long.parseLong(jwtService.extractUserID(token)));
         }
         return Optional.empty();

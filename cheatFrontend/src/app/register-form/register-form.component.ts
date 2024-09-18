@@ -20,8 +20,10 @@ export class RegisterFormComponent {
   constructor(private loginService:LoginServiceService, private router:Router){}
 
   registraUtente() {
+    //creazione di un nuovo Utente e chiamata al backend
     this.loginService.Register(new Utente(this.nome, this.cognome, this.email, this.user, this.pwd)).subscribe({
       next: (response) => {
+        //intercettazione delle risposte
         if (response.status === 200) {
           window.alert('Registrazione avvenuta. Premi OK per continuare.');
           this.router.navigate(['login']);

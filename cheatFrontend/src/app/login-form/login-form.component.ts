@@ -21,10 +21,12 @@ export class LoginFormComponent {
 
   
   onSubmit() {
+    //se entrambe le credenziali sono presenti
     if (this.user && this.pwd) {
-    
+      //chiamata al servizio di login
           this.loginService.Login(this.user, this.pwd).subscribe(
             {
+              //intercettazione delle risposte e redirecting
                 next: (response) => {
                   if (response.status === 200) {
                     this.router.navigate(['select']);

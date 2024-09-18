@@ -1,5 +1,8 @@
 <div class="container">
-    <h1>{{ricetteCount}} Ricette trovate</h1>
+  <h1 *ngIf="deletable; else ricetteNormali">Le mie ricette</h1>
+  <ng-template #ricetteNormali>
+    <h1>{{ ricetteCount }} Ricette trovate</h1>
+  </ng-template>
   
     <div class="table-responsive">
       <table class="table table-striped">
